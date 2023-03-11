@@ -1,0 +1,51 @@
+.vjs-cue-marker {
+  border-radius: 50%;
+  position: absolute;
+  background-color: #FFF;
+  width: 5px;
+  height: 5px;
+  transition: all 200ms ease;
+  z-index: 3;
+}
+
+.vjs-cue-marker:hover {
+  transform: scaleX(1.25) !important;
+}
+
+.video-js:hover .vjs-cue-marker {
+  border-radius: 10%;
+  width: 4px;
+  height: 100%;
+  transform: scaleX(.5);
+}
+
+.vjs-progress-control:hover .vjs-cue-marker {
+  height: 150%;
+  bottom: -20%;
+}
+
+.video-js {
+  padding: 0 5px;
+  bottom: 17px;
+  display: none;
+}
+
+.vjs-cue-tip {
+  position: absolute;
+  pointer-events: none;
+  display: none;
+  z-index: 4;
+}
+
+.vjs-cue-data {
+  color: #e0e0e0;
+  border: 1px solid #bdbdbd;
+  font-size: x-small;
+  border-radius: 0.3em;
+  background-color: #000;
+  padding: 2px 5px;
+}
+
+.vjs-cue-tip-visible {
+  display: block;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="cuepoints_bars.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="//www.brightcove.com/favicon.svg">
+    <title>Brightcove - Cue Points Player</title>
+</head>
+<body>
+
+<div class="container">
+    <div id="output">
+        <p>Mediainfo <code>cuePoints</code> data</p>
+        <code style="color: green;" id="insertionPoint_MI"></code>
+        <p>Activecues <code>cues</code> data</p>
+        <code style="color:brown;" id="insertionPoint_C"></code>
+        <p>Activecues <code>activeCue</code> data</p>
+        <code id="insertionPoint_AC"></code>
+    </div>
+    <div style="max-width: 960px;" id="video">
+        <style>
+            video-js.video-js.vjs-fluid:not(.vjs-audio-only-mode) {
+                padding-top: 56.25%;
+                }
+        </style>
+        <video-js
+            id="myPlayer" 
+            data-account="5380177774001" 
+            data-player="default" 
+            data-embed="default" 
+            controls="" 
+            data-video-id="1759389966619620524" 
+            data-playlist-id="" 
+            data-application-id="" 
+            class="vjs-fluid">
+        </video-js>
+    </div>
+</div>
+<script src="//players.brightcove.net/5380177774001/default_default/index.min.js"></script>
+<script src="cuepoints.js"></script>
+<script>
+    videojs.getPlayer('myPlayer').ready(function() {
+      var myPlayer = this;
+      myPlayer.cuePointPlugin();
+    });
+</script>
+</body>
+</html>
