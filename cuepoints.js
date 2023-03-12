@@ -2,26 +2,22 @@ videojs.registerPlugin('cuePointPlugin', function() {
 	var player = this;
     player.on('loadedmetadata', function() {
         let cuePointsArr = new Array(),
-            codeCuePointsArr = new Array(),
             longDescChapters = new Array(),
             tt = player.textTracks()[0],
             videoDuration = player.mediainfo.duration;
+            longDesc = player.mediainfo.longDescription;
         cuePointsArr = player.mediainfo.cuePoints;
-        codeCuePointsArr = cuePointsArr.filter(isCodeCuePoint);
-        codeCuePointsArr.sort((a, b) => {
-            return a.time - b.time;
-        });
-        if (codeCuePointsArr.length <= 0) {
-            console.log(`Get the chapters from the long desc field ${longDescChapters}`);
-        } else {
-            displayMetaInfo(tt, player);
-            addCueEl(codeCuePointsArr, videoDuration);
-        }
+        arrSortFilter(cuePointsArr);
+        displayMetaInfo(tt, player);
+        addCueEl(cuePointsArr, videoDuration);
     })
 });
 
-function isCodeCuePoint(cuePoint) {
-    return cuePoint.type === 'CODE';
+const arrSortFilter = (arr) => {
+    arr.sort((a, b) => {
+        return a.time - b.time;
+    });
+    arr.filter(el => el.type === 'CODE');
 }
 
 const displayMetaInfo = (tt, player) => {
@@ -52,7 +48,7 @@ const displayMetaInfo = (tt, player) => {
     document.querySelector("#insertionPoint_MI").innerHTML = dynamicHTML_MI;
 }
 
-function addCueEl(codeCuePointsArr, videoDuration) {
+function addCueEl(arr, videoDuration) {
     let playerWidth = document.querySelector('video-js').offsetWidth,
         controlBar = document.querySelector('.vjs-progress-control'),
         progresBar = document.querySelector('.vjs-progress-holder'),
@@ -63,14 +59,14 @@ function addCueEl(codeCuePointsArr, videoDuration) {
     cueControl.style.setProperty('--cue-control-width', playerWidth + 'px');
     controlBar.prepend(cueControl);
     progresBar.appendChild(cueTip);
-    for (let i = 0; i < codeCuePointsArr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         let el = document.createElement('div');
         el.className = 'vjs-cue-marker';
         el.id = 'marker' + i;
         el.addEventListener("mouseover", (e) => {
-            setCueInfo(e, codeCuePointsArr);
+            setCueInfo(e, arr);
         });
-        var time = codeCuePointsArr[i].time;
+        var time = arr[i].time;
             segment = playerWidth / time;
         if (segment === Infinity){
             segment = 0;
@@ -88,14 +84,14 @@ const creatCueInfoElem = () => {
     cueTip.appendChild(cueTipData);
 }
 
-const setCueInfo = (e, codeCuePointsArr) => {
+const setCueInfo = (e, arr) => {
     let i = e.target.id.slice(-1),
         cueHolder = document.querySelector('.vjs-cue-control').offsetWidth,
         cueMarker = document.querySelectorAll('.vjs-cue-marker')[i],
         cueTip = document.querySelector('.vjs-cue-tip'),
         cueTipData = document.querySelector('.vjs-cue-data');
     cueTip.classList.add('vjs-cue-tip-visible');
-    cueTipData.innerHTML = `${codeCuePointsArr[i].name}`;
+    cueTipData.innerHTML = `${arr[i].name}`;
     if (cueMarker.offsetLeft > cueHolder / 2){
         cueTip.classList.add('vjs-cue-right');
         cueTip.style.right = cueHolder - cueMarker.offsetLeft +15 + 'px';
@@ -103,10 +99,10 @@ const setCueInfo = (e, codeCuePointsArr) => {
         cueTip.style.left = cueMarker.offsetLeft +20 + 'px';
         cueTip.classList.add('vjs-cue-left');
     }
-    if (codeCuePointsArr[i].name === '') {
+    if (arr[i].name === '') {
         cueTipData.classList.add('vjs-cue-data-hidden');
     }
-    if (i == codeCuePointsArr.length - 1) {
+    if (i == arr.length - 1) {
         cueMarker.classList.add('vjs-cue-marker-last');
     }
     cueMarker.addEventListener('mousemove', (e) => {

@@ -18,8 +18,8 @@
 .vjs-cue-marker {
   position: absolute;
   background-color: #FFF;
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   transition: all 200ms ease;
   transform: rotate(45deg);
   z-index: 3;
