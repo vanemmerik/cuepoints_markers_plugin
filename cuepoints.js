@@ -118,3 +118,5 @@ const setCueInfo = (e, arr) => {
         cueTipData.classList.remove('vjs-cue-data-hidden');
     });
 }
+
+const re = new RegExp(/(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)/gm);
