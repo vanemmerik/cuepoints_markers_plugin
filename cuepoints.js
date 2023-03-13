@@ -2,23 +2,63 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
 	var player = this;
     player.on('loadedmetadata', function() {
         let cuePointsArr = new Array(),
-            longDescChapters = new Array(),
             tt = player.textTracks()[0],
-            videoDuration = player.mediainfo.duration;
+            videoDuration = player.mediainfo.duration,
             longDesc = player.mediainfo.longDescription;
-        cuePointsArr = arrSortFilter(player.mediainfo.cuePoints);
+        cuePointsArr = player.mediainfo.cuePoints;
+        xtractMatch(longDesc, cuePointsArr, videoDuration);
+        cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
         displayMetaInfo(tt, player);
         addCueEl(cuePointsArr, videoDuration);
-        console.log(JSON.stringify(longDesc));
     })
 });
 
-const arrSortFilter = (arr) => {
+const xtractMatch = (string, arr, videoDuration) => {
+    let timeRe = new RegExp(/((?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d))|((?:[01]\d|2[0123]):(?:[012345]\d)|(?:\d:[0-5][0-9]))/gm),
+        descRe = new RegExp(/(([\d]:[\d][\d]:[\d][\d])|([\d][\d]:[\d][\d]:[\d][\d])|([\d][\d]:[\d][\d])|([\d]:[\d][\d]))/gm),
+        chapters = string.match(timeRe);
+    for (let i = 0; i < chapters.length; i++) {
+        let time =  chapters[i].split(':'),
+            seconds,
+            idNum = Math.floor(Math.random() * 9000000000000) + 1000000000000;
+        if (time.length === 2){
+            seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1]));
+            if (seconds > videoDuration){
+                continue;
+            }
+            arr.push({
+                id: `${idNum}`,
+                name: 'TBC',
+                type: 'TEXT',
+                time: seconds,
+                metadata: '',
+                startTime: seconds,
+                endTime: ''
+            });
+        }
+        if (time.length === 3){
+            seconds = (Number.parseFloat(time[0]) * 3600 + Number.parseFloat(time[1]) * 60 + Number.parseFloat(time[2]));
+            if (seconds > videoDuration){
+                continue;
+            }
+            arr.push({
+                id: `${idNum}`,
+                name: 'TBC',
+                type: 'TEXT',
+                time: seconds,
+                metadata: '',
+                startTime: seconds,
+                endTime: ''
+            });
+        }
+    }
+    arrSort(arr);
+}
+
+const arrSort = (arr) => {
     arr.sort((a, b) => {
         return a.time - b.time;
     });
-    arr = arr.filter(cue => cue.type === 'CODE');
-    return (arr);
 }
 
 const displayMetaInfo = (tt, player) => {
@@ -118,5 +158,3 @@ const setCueInfo = (e, arr) => {
         cueTipData.classList.remove('vjs-cue-data-hidden');
     });
 }
-
-const re = new RegExp(/(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)/gm);
