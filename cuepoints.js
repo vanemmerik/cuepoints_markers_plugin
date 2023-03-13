@@ -1,4 +1,4 @@
-videojs.registerPlugin('cuePointPlugin', function() {
+videojs.registerPlugin('cuePointPlugin', function(options) {
 	var player = this;
     player.on('loadedmetadata', function() {
         let cuePointsArr = new Array(),
@@ -6,10 +6,10 @@ videojs.registerPlugin('cuePointPlugin', function() {
             tt = player.textTracks()[0],
             videoDuration = player.mediainfo.duration;
             longDesc = player.mediainfo.longDescription;
-        cuePointsArr = player.mediainfo.cuePoints;
-        arrSortFilter(cuePointsArr);
+        cuePointsArr = arrSortFilter(player.mediainfo.cuePoints);
         displayMetaInfo(tt, player);
         addCueEl(cuePointsArr, videoDuration);
+        console.log(JSON.stringify(longDesc));
     })
 });
 
@@ -17,7 +17,8 @@ const arrSortFilter = (arr) => {
     arr.sort((a, b) => {
         return a.time - b.time;
     });
-    arr.filter(el => el.type === 'CODE');
+    arr = arr.filter(cue => cue.type === 'CODE');
+    return (arr);
 }
 
 const displayMetaInfo = (tt, player) => {
@@ -63,6 +64,7 @@ function addCueEl(arr, videoDuration) {
         let el = document.createElement('div');
         el.className = 'vjs-cue-marker';
         el.id = 'marker' + i;
+        el.style.setProperty('--marker-color', options.cueMarkerColor);
         el.addEventListener("mouseover", (e) => {
             setCueInfo(e, arr);
         });

@@ -17,7 +17,7 @@
 
 .vjs-cue-marker {
   position: absolute;
-  background-color: #FFF;
+  background-color: var(--marker-color);
   width: 6px;
   height: 6px;
   transition: all 200ms ease;
