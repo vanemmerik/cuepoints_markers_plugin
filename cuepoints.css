@@ -23,6 +23,7 @@
   transition: all 200ms ease;
   transform: rotate(45deg);
   z-index: 3;
+  bottom: -1px;
 }
 
 .vjs-cue-marker:hover {
@@ -33,11 +34,12 @@
   height: 100%;
   width: 3px;
   transform: rotate(0deg);
+  bottom: unset;
 }
 
 .vjs-progress-control:hover .vjs-cue-marker {
-  height: 150%;
-  bottom: -25%;
+  height: 170%;
+  bottom: -35%;
 }
 
 .video-js {
