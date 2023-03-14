@@ -17,23 +17,24 @@
 
 .vjs-cue-marker {
   position: absolute;
+  border-radius: 50%;
   background-color: var(--marker-color);
-  width: 6px;
-  height: 6px;
+  width: 1px;
+  height: 1px;
+  transform: scale(6);
   transition: all 200ms ease;
-  transform: rotate(45deg);
   z-index: 3;
-  bottom: -1px;
+  bottom: 1px;
 }
 
 .vjs-cue-marker:hover {
-  transform: scaleX(2) !important;
+  transform: scaleX(6) !important;
 }
 
 .video-js:hover .vjs-cue-marker {
+  border-radius: 0%;
   height: 100%;
-  width: 3px;
-  transform: rotate(0deg);
+  transform: scaleX(2.5);
   bottom: unset;
 }
 
@@ -60,9 +61,29 @@
   border: 1px solid transparent;
   font-size: x-small;
   border-radius: 0.3em;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: #000;
   padding: 5px 10px;
-  box-shadow: 0px 0px 2px #c6c6c6;
+  box-shadow: 0px 0px 2px #fdfdfd;
+}
+
+.vjs-cue-data-left::after {
+  position: absolute;
+  margin-left: 10px;
+  top: 16px;
+  font-size: 12px;
+  content: "▶";
+  color: #000;
+  text-shadow: 1px 0px 1px #c6c6c6;
+}
+
+.vjs-cue-data-right::before {
+  position: absolute;
+  margin-left: -20px;
+  top: 16px;
+  font-size: 12px;
+  content: "◀";
+  color: #000;
+  text-shadow: -1px 0px 1px #c6c6c6;
 }
 
 .vjs-cue-tip-visible {

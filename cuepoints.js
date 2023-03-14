@@ -10,17 +10,21 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
         cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
         displayMetaInfo(tt, player);
         addCueEl(cuePointsArr, videoDuration);
+        console.log(cuePointsArr);
     })
 });
 
 const xtractMatch = (string, arr, videoDuration) => {
-    let timeRe = new RegExp(/((?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d))|((?:[01]\d|2[0123]):(?:[012345]\d)|(?:\d:[0-5][0-9]))/gm),
-        descRe = new RegExp(/(([\d]:[\d][\d]:[\d][\d])|([\d][\d]:[\d][\d]:[\d][\d])|([\d][\d]:[\d][\d])|([\d]:[\d][\d]))/gm),
-        chapters = string.match(timeRe);
-    for (let i = 0; i < chapters.length; i++) {
-        let time =  chapters[i].split(':'),
+    let tRex = new RegExp(/((?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d))|((?:[01]\d|2[0123]):(?:[012345]\d)|(?:\d:[0-5][0-9]))/gm),
+        dRex = new RegExp(/^.*?(^[0-5][0-9]:|^[0-59]:).*$/gm),
+        chaptrTime = string.match(tRex),
+        chaptrName = string.match(dRex);
+    for (let i = 0; i < chaptrTime.length; i++) {
+        let time = chaptrTime[i].split(':'),
+            description = chaptrName[i].substring(chaptrName[i].indexOf(' ')),
             seconds,
             idNum = Math.floor(Math.random() * 9000000000000) + 1000000000000;
+            description = stringTidy(description);
         if (time.length === 2){
             seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1]));
             if (seconds > videoDuration){
@@ -28,25 +32,25 @@ const xtractMatch = (string, arr, videoDuration) => {
             }
             arr.push({
                 id: `${idNum}`,
-                name: 'TBC',
+                name: description,
                 type: 'TEXT',
                 time: seconds,
-                metadata: '',
+                metadata: description,
                 startTime: seconds,
                 endTime: ''
             });
         }
         if (time.length === 3){
             seconds = (Number.parseFloat(time[0]) * 3600 + Number.parseFloat(time[1]) * 60 + Number.parseFloat(time[2]));
-            if (seconds > videoDuration){
+            if (seconds > videoDuration || arr[i].time === seconds){
                 continue;
             }
             arr.push({
                 id: `${idNum}`,
-                name: 'TBC',
+                name: description,
                 type: 'TEXT',
                 time: seconds,
-                metadata: '',
+                metadata: description,
                 startTime: seconds,
                 endTime: ''
             });
@@ -59,6 +63,12 @@ const arrSort = (arr) => {
     arr.sort((a, b) => {
         return a.time - b.time;
     });
+}
+
+const stringTidy = (str) => {
+    str = str.replace('-', '');
+    str = str.trim();
+    return(str);
 }
 
 const displayMetaInfo = (tt, player) => {
@@ -135,11 +145,11 @@ const setCueInfo = (e, arr) => {
     cueTip.classList.add('vjs-cue-tip-visible');
     cueTipData.innerHTML = `${arr[i].name}`;
     if (cueMarker.offsetLeft > cueHolder / 2){
-        cueTip.classList.add('vjs-cue-right');
-        cueTip.style.right = cueHolder - cueMarker.offsetLeft +15 + 'px';
+        cueTipData.classList.add('vjs-cue-data-left');
+        cueTip.style.right = cueHolder - cueMarker.offsetLeft +20 + 'px';
     } else {
         cueTip.style.left = cueMarker.offsetLeft +20 + 'px';
-        cueTip.classList.add('vjs-cue-left');
+        cueTipData.classList.add('vjs-cue-data-right');
     }
     if (arr[i].name === '') {
         cueTipData.classList.add('vjs-cue-data-hidden');
@@ -153,8 +163,8 @@ const setCueInfo = (e, arr) => {
     cueMarker.addEventListener('mouseout', () => {
         cueTip.removeAttribute('style');
         cueTip.classList.remove('vjs-cue-tip-visible');
-        cueTip.classList.remove('vjs-cue-left');
-        cueTip.classList.remove('vjs-cue-right');
+        cueTipData.classList.remove('vjs-cue-data-left');
+        cueTipData.classList.remove('vjs-cue-data-right');
         cueTipData.classList.remove('vjs-cue-data-hidden');
     });
 }
