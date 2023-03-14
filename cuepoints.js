@@ -10,7 +10,7 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
         cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
         displayMetaInfo(tt, player);
         addCueEl(cuePointsArr, videoDuration);
-        console.log(cuePointsArr);
+        // console.log(cuePointsArr);
     })
 });
 
@@ -42,7 +42,7 @@ const xtractMatch = (string, arr, videoDuration) => {
         }
         if (time.length === 3){
             seconds = (Number.parseFloat(time[0]) * 3600 + Number.parseFloat(time[1]) * 60 + Number.parseFloat(time[2]));
-            if (seconds > videoDuration || arr[i].time === seconds){
+            if (seconds > videoDuration){
                 continue;
             }
             arr.push({
@@ -55,6 +55,7 @@ const xtractMatch = (string, arr, videoDuration) => {
                 endTime: ''
             });
         }
+        console.log(arr.filter(el => el.time === seconds));
     }
     arrSort(arr);
 }
