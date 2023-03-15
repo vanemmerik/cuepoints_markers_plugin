@@ -46,9 +46,7 @@ const timeConversion = (arr, time, idNum, seconds, description, duration) => {
     if (description.match(/\b[^\d\W]+\b/g) === null) description = '';
     if (time.length === 2){
         seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1]));
-        if (seconds > duration){
-            return;
-        }
+        if (seconds > duration) return;
         arr.push({
             id: `${idNum}`,
             name: description,
@@ -61,9 +59,7 @@ const timeConversion = (arr, time, idNum, seconds, description, duration) => {
     }
     if (time.length === 3){
         seconds = (Number.parseFloat(time[0]) * 3600 + Number.parseFloat(time[1]) * 60 + Number.parseFloat(time[2]));
-        if (seconds > duration){
-            return;
-        }
+        if (seconds > duration) return;
         arr.push({
             id: `${idNum}`,
             name: description,
