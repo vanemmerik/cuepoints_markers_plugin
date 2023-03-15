@@ -129,7 +129,7 @@ const addCueEl = (arr, videoDuration) => {
         let el = document.createElement('div');
         el.className = 'vjs-cue-marker';
         el.id = 'marker' + i;
-        el.style.setProperty('--marker-color', options.cueMarkerColor);
+        el.style.setProperty('--marker-color', options.cue_marker_color);
         el.addEventListener("mouseover", (e) => {
             setCueInfo(e, arr);
         });

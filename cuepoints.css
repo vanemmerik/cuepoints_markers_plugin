@@ -34,7 +34,7 @@
 .video-js:hover .vjs-cue-marker {
   border-radius: 0%;
   height: 100%;
-  transform: scaleX(2.5);
+  transform: scaleX(3);
   bottom: unset;
 }
 
