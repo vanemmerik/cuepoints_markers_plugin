@@ -9,8 +9,8 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
         xtractMatch(longDesc, cuePointsArr, videoDuration);
         cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
         cuePointsArr = dedupeArr(cuePointsArr);
-        displayMetaInfo(tt, player);
         addCueEl(cuePointsArr, videoDuration);
+        displayMetaInfo(tt, cuePointsArr);
     })
 });
 
@@ -43,9 +43,7 @@ const stringTidy = (str) => {
 }
 
 const timeConversion = (arr, time, idNum, seconds, description, duration) => {
-    if (description.match(/\b[^\d\W]+\b/g) === null) {
-        description = '';
-    }
+    if (description.match(/\b[^\d\W]+\b/g) === null) description = '';
     if (time.length === 2){
         seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1]));
         if (seconds > duration){
@@ -89,10 +87,11 @@ const dedupeArr = (arr) => {
     return [...mapObj.values()];
 }
 
-const displayMetaInfo = (tt, player) => {
+const displayMetaInfo = (tt, arr) => {
     tt.oncuechange = function () {
         if (tt.activeCues[0] !== undefined) {
         var dynamicHTML_AC = "id: " + tt.activeCues[0].originalCuePoint.id + ", ";
+        dynamicHTML_AC += "type: " + tt.activeCues[0].originalCuePoint.type + ", ";
         dynamicHTML_AC += "name: " + tt.activeCues[0].originalCuePoint.name + ", ";
         dynamicHTML_AC += "startTime: " + tt.activeCues[0].startTime + ",  ";
         dynamicHTML_AC += "endTime: " + tt.activeCues[0].endTime;
@@ -103,21 +102,23 @@ const displayMetaInfo = (tt, player) => {
         dynamicHTML_MI = "";
     for (i = 0; i < tt.cues.length; i++ ) {
         dynamicHTML_C += "id: " + tt.cues[i].originalCuePoint.id + ", ";
+        dynamicHTML_C += "type: " + tt.cues[i].originalCuePoint.type + ", ";
         dynamicHTML_C += "name: " + tt.cues[i].originalCuePoint.name + ", ";
         dynamicHTML_C += "startTime: " + tt.cues[i].startTime + ", ";
         dynamicHTML_C += "endTime: " + tt.cues[i].endTime + "<br/>";
     }
     document.querySelector("#insertionPoint_C").innerHTML = dynamicHTML_C;
-    for (i = 0; i < player.mediainfo.cuePoints.length; i++ ) {
-        dynamicHTML_MI += "id: " + player.mediainfo.cuePoints[i].id + ", ";
-        dynamicHTML_MI += "name: " + player.mediainfo.cuePoints[i].name + ", ";
-        dynamicHTML_MI += "startTime: " + player.mediainfo.cuePoints[i].startTime + ", ";
-        dynamicHTML_MI += "endTime: " + player.mediainfo.cuePoints[i].endTime + "<br/>";
+    for (i = 0; i < arr.length; i++ ) {
+        dynamicHTML_MI += "id: " + arr[i].id + ", ";
+        dynamicHTML_MI += "type: " + arr[i].type + ", ";
+        dynamicHTML_MI += "name: " + arr[i].name + ", ";
+        dynamicHTML_MI += "startTime: " + arr[i].startTime + ", ";
+        dynamicHTML_MI += "endTime: " + arr[i].endTime + "<br/>";
     }
     document.querySelector("#insertionPoint_MI").innerHTML = dynamicHTML_MI;
 }
 
-function addCueEl(arr, videoDuration) {
+const addCueEl = (arr, videoDuration) => {
     let playerWidth = document.querySelector('video-js').offsetWidth,
         controlBar = document.querySelector('.vjs-progress-control'),
         progresBar = document.querySelector('.vjs-progress-holder'),
@@ -144,10 +145,10 @@ function addCueEl(arr, videoDuration) {
         el.style.left = `${Math.round(time / videoDuration * playerWidth)}px`; // Based on proportion of width using time 
         cueControl.append(el);
     }
-    creatCueInfoElem();
+    creatCueInfoEl();
 }
 
-const creatCueInfoElem = () => {
+const creatCueInfoEl = () => {
     let cueTipData = document.createElement('p'),
         cueTip = document.querySelector('.vjs-cue-tip');
     cueTipData.className = 'vjs-cue-data';
@@ -169,12 +170,8 @@ const setCueInfo = (e, arr) => {
         cueTip.style.left = cueMarker.offsetLeft +20 + 'px';
         cueTipData.classList.add('vjs-cue-data-right');
     }
-    if (arr[i].name === '') {
-        cueTipData.classList.add('vjs-cue-data-hidden');
-    }
-    if (i == arr.length - 1) {
-        cueMarker.classList.add('vjs-cue-marker-last');
-    }
+    if (arr[i].name === '') cueTipData.classList.add('vjs-cue-data-hidden');
+    if (i == arr.length - 1) cueMarker.classList.add('vjs-cue-marker-last');
     cueMarker.addEventListener('mousemove', (e) => {
         cueTip.style.top = e.offsetY - 27 + 'px';
     });
