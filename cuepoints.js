@@ -8,54 +8,24 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
         cuePointsArr = player.mediainfo.cuePoints;
         xtractMatch(longDesc, cuePointsArr, videoDuration);
         cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
+        cuePointsArr = dedupeArr(cuePointsArr);
         displayMetaInfo(tt, player);
         addCueEl(cuePointsArr, videoDuration);
-        // console.log(cuePointsArr);
     })
 });
 
 const xtractMatch = (string, arr, videoDuration) => {
-    let tRex = new RegExp(/((?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d))|((?:[01]\d|2[0123]):(?:[012345]\d)|(?:\d:[0-5][0-9]))/gm),
+    let tRex = new RegExp(/(^(?:[01]\d|2[0-3]|[0-59]):[0-5]\d:[0-5]\d)|(^(?:[0-5]\d|2[123]|[0-59]):[0-5]\d)/gm),
         dRex = new RegExp(/^.*?(^[0-5][0-9]:|^[0-59]:).*$/gm),
         chaptrTime = string.match(tRex),
         chaptrName = string.match(dRex);
     for (let i = 0; i < chaptrTime.length; i++) {
         let time = chaptrTime[i].split(':'),
-            description = chaptrName[i].substring(chaptrName[i].indexOf(' ')),
+            description = chaptrName[i].slice(chaptrTime[i].length),
             seconds,
             idNum = Math.floor(Math.random() * 9000000000000) + 1000000000000;
             description = stringTidy(description);
-        if (time.length === 2){
-            seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1]));
-            if (seconds > videoDuration){
-                continue;
-            }
-            arr.push({
-                id: `${idNum}`,
-                name: description,
-                type: 'TEXT',
-                time: seconds,
-                metadata: description,
-                startTime: seconds,
-                endTime: ''
-            });
-        }
-        if (time.length === 3){
-            seconds = (Number.parseFloat(time[0]) * 3600 + Number.parseFloat(time[1]) * 60 + Number.parseFloat(time[2]));
-            if (seconds > videoDuration){
-                continue;
-            }
-            arr.push({
-                id: `${idNum}`,
-                name: description,
-                type: 'TEXT',
-                time: seconds,
-                metadata: description,
-                startTime: seconds,
-                endTime: ''
-            });
-        }
-        console.log(arr.filter(el => el.time === seconds));
+       timeConversion(arr, time, idNum, seconds, description, videoDuration);
     }
     arrSort(arr);
 }
@@ -67,9 +37,56 @@ const arrSort = (arr) => {
 }
 
 const stringTidy = (str) => {
-    str = str.replace('-', '');
+    str = str.replace(/([.,\/;:{}=\-_~()<>{}+])/g, '');
     str = str.trim();
     return(str);
+}
+
+const timeConversion = (arr, time, idNum, seconds, description, duration) => {
+    if (description.match(/\b[^\d\W]+\b/g) === null) {
+        description = '';
+    }
+    if (time.length === 2){
+        seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1]));
+        if (seconds > duration){
+            return;
+        }
+        arr.push({
+            id: `${idNum}`,
+            name: description,
+            type: 'TEXT',
+            time: seconds,
+            metadata: description,
+            startTime: seconds,
+            endTime: ''
+        });
+    }
+    if (time.length === 3){
+        seconds = (Number.parseFloat(time[0]) * 3600 + Number.parseFloat(time[1]) * 60 + Number.parseFloat(time[2]));
+        if (seconds > duration){
+            return;
+        }
+        arr.push({
+            id: `${idNum}`,
+            name: description,
+            type: 'TEXT',
+            time: seconds,
+            metadata: description,
+            startTime: seconds,
+            endTime: ''
+        });
+    }
+}
+
+const dedupeArr = (arr) => {
+    let mapObj = new Map()
+    arr.forEach(v => {
+        let prevValue = mapObj.get(v.time)
+        if(!prevValue){
+            mapObj.set(v.time, v)
+        } 
+    })
+    return [...mapObj.values()];
 }
 
 const displayMetaInfo = (tt, player) => {
@@ -138,7 +155,7 @@ const creatCueInfoElem = () => {
 }
 
 const setCueInfo = (e, arr) => {
-    let i = e.target.id.slice(-1),
+    let i = e.target.id.slice(6),
         cueHolder = document.querySelector('.vjs-cue-control').offsetWidth,
         cueMarker = document.querySelectorAll('.vjs-cue-marker')[i],
         cueTip = document.querySelector('.vjs-cue-tip'),
