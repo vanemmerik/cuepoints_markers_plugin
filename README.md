@@ -1,2 +1,2 @@
 # Brightcove - cue point markers plugin
-A Brightcove player plugin that adds cue point markers and metadata dynamically to the scrub bar.
+A Brightcove player plugin that adds cue point markers and metadata dynamically to the player progress bar.
