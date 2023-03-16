@@ -83,7 +83,7 @@
 .vjs-cue-data-right::before {
   position: absolute;
   margin-left: -18px;
-  top: 17px;
+  top: 18px;
   font-size: 12px;
   content: "◀";
   color: #000;

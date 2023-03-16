@@ -9,7 +9,7 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
         xtractMatch(longDesc, cuePointsArr, videoDuration);
         cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
         cuePointsArr = dedupeArr(cuePointsArr);
-        assignCueEndTime(cuePointsArr);
+        assignCueEndTime(cuePointsArr,videoDuration);
         addCueEl(cuePointsArr, videoDuration);
         displayMetaInfo(tt, cuePointsArr);
     })
@@ -78,23 +78,20 @@ const dedupeArr = (arr) => {
     arr.forEach(v => {
         let prevValue = mapObj.get(v.time)
         if(!prevValue){
-            mapObj.set(v.time, v)
-        } 
+            mapObj.set(v.time, v)   
+        }
     })
     return [...mapObj.values()];
 }
 
-const assignCueEndTime = (arr, i) => {
-    let j = new Array(),
-        next = -1;
-        for (j = i + 1; j < arr.length; j++)
-        {
-            if (arr[i].time < arr[j]){
-            next = arr[j];
-            break;
-        }
+const assignCueEndTime = (arr, duration) => {
+    let v = 1;
+    for (let i = 0; i < arr.length; i++) {
+        if (v <= arr.length - 1)arr[i].endTime = arr[v].time;
+        if (v === arr.length) arr[i].endTime = duration;
+        v++;
     }
-    console.log(arr);
+
 }
 
 const displayMetaInfo = (tt, arr) => {
