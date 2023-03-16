@@ -9,44 +9,31 @@
     <title>Brightcove - Cue Points Player</title>
 </head>
 <body>
-
-<div class="container">
-    <div id="output">
-        <p>Mediainfo <code>cuePoints</code> data</p>
-        <code style="color: green;" id="insertionPoint_MI"></code>
-        <p>Activecues <code>cues</code> data</p>
-        <code style="color:brown;" id="insertionPoint_C"></code>
-        <p>Activecues <code>activeCue</code> data</p>
-        <code id="insertionPoint_AC"></code>
-    </div>
-    <div style="max-width: 960px;" id="video">
-        <style>
-            video-js.video-js.vjs-fluid:not(.vjs-audio-only-mode) {
-                padding-top: 56.25%;
-                }
-        </style>
-        <video-js
-            id="myPlayer" 
-            data-account="5380177774001" 
-            data-player="default" 
-            data-embed="default" 
-            controls="" 
-            data-video-id="1760202275610894432" 
-            data-playlist-id=""
-            data-application-id="" 
-            class="vjs-fluid">
-        </video-js>
-    </div>
+<div style="max-width: 960px; margin: auto; padding-top: 40px;">
+    <style>
+        video-js.video-js.vjs-fluid:not(.vjs-audio-only-mode) {
+            padding-top: 56.25%;
+            }
+    </style>
+    <video-js
+        id="myPlayer" 
+        data-account="5380177774001" 
+        data-player="default" 
+        data-embed="default" 
+        controls=""
+        data-video-id="1760202275610894432"
+        data-playlist-id=""
+        data-application-id="" 
+        class="vjs-fluid">
+    </video-js>
 </div>
 <script src="//players.brightcove.net/5380177774001/default_default/index.min.js"></script>
 <script src="cuepoints.js"></script>
-<script type="text/javascript">
-    var options = {"cue_marker_color": "#03fcf4"};
-  </script>
 <script>
     videojs.getPlayer('myPlayer').ready(function() {
-      var myPlayer = this;
-      myPlayer.cuePointPlugin(options);
+    var myPlayer = this,
+        options = {"cue_marker_color": "#03fcf4"};
+    myPlayer.cuePointPlugin(options);
     });
 </script>
 </body>

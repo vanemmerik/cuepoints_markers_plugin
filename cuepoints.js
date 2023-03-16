@@ -2,7 +2,6 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
 	var player = this;
     player.on('loadedmetadata', function() {
         let cuePointsArr = new Array(),
-            tt = player.textTracks()[0],
             videoDuration = player.mediainfo.duration,
             longDesc = player.mediainfo.longDescription;
         cuePointsArr = player.mediainfo.cuePoints;
@@ -10,8 +9,7 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
         cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
         cuePointsArr = dedupeArr(cuePointsArr);
         assignCueEndTime(cuePointsArr,videoDuration);
-        addCueEl(cuePointsArr, videoDuration);
-        displayMetaInfo(tt, cuePointsArr);
+        addCueEl(cuePointsArr, videoDuration, options);
     })
 });
 
@@ -20,7 +18,7 @@ const xtractMatch = (string, arr, videoDuration) => {
         dRex = new RegExp(/^.*?(^[0-5][0-9]:|^[0-59]:).*$/gm),
         chaptrTime = string.match(tRex),
         chaptrName = string.match(dRex);
-    if (chaptrName || chaptrTime === null) return(arrSort(arr)); 
+    if (chaptrTime === null) return(arrSort(arr));
     for (let i = 0; i < chaptrTime.length; i++) {
         let time = chaptrTime[i].split(':'),
             description = chaptrName[i].slice(chaptrTime[i].length),
@@ -91,42 +89,10 @@ const assignCueEndTime = (arr, duration) => {
         if (v <= arr.length - 1)arr[i].endTime = arr[v].time;
         if (v === arr.length) arr[i].endTime = duration;
         v++;
-    }
-
+    }   
 }
 
-const displayMetaInfo = (tt, arr) => {
-    tt.oncuechange = function () {
-        if (tt.activeCues[0] !== undefined) {
-        var dynamicHTML_AC = "id: " + tt.activeCues[0].originalCuePoint.id + ", ";
-        dynamicHTML_AC += "type: " + tt.activeCues[0].originalCuePoint.type + ", ";
-        dynamicHTML_AC += "name: " + tt.activeCues[0].originalCuePoint.name + ", ";
-        dynamicHTML_AC += "startTime: " + tt.activeCues[0].startTime + ",  ";
-        dynamicHTML_AC += "endTime: " + tt.activeCues[0].endTime;
-        document.getElementById("insertionPoint_AC").innerHTML += dynamicHTML_AC + "<br/>";
-        }
-    }
-    let dynamicHTML_C = "",
-        dynamicHTML_MI = "";
-    for (i = 0; i < tt.cues.length; i++ ) {
-        dynamicHTML_C += "id: " + tt.cues[i].originalCuePoint.id + ", ";
-        dynamicHTML_C += "type: " + tt.cues[i].originalCuePoint.type + ", ";
-        dynamicHTML_C += "name: " + tt.cues[i].originalCuePoint.name + ", ";
-        dynamicHTML_C += "startTime: " + tt.cues[i].startTime + ", ";
-        dynamicHTML_C += "endTime: " + tt.cues[i].endTime + "<br/>";
-    }
-    document.querySelector("#insertionPoint_C").innerHTML = dynamicHTML_C;
-    for (i = 0; i < arr.length; i++ ) {
-        dynamicHTML_MI += "id: " + arr[i].id + ", ";
-        dynamicHTML_MI += "type: " + arr[i].type + ", ";
-        dynamicHTML_MI += "name: " + arr[i].name + ", ";
-        dynamicHTML_MI += "startTime: " + arr[i].startTime + ", ";
-        dynamicHTML_MI += "endTime: " + arr[i].endTime + "<br/>";
-    }
-    document.querySelector("#insertionPoint_MI").innerHTML = dynamicHTML_MI;
-}
-
-const addCueEl = (arr, videoDuration) => {
+const addCueEl = (arr, videoDuration, options) => {
     let playerWidth = document.querySelector('video-js').offsetWidth,
         controlBar = document.querySelector('.vjs-progress-control'),
         progresBar = document.querySelector('.vjs-progress-holder'),
