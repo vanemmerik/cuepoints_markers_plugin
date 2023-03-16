@@ -23,7 +23,7 @@ const xtractMatch = (string, arr, videoDuration) => {
         let time = chaptrTime[i].split(':'),
             description = chaptrName[i].slice(chaptrTime[i].length),
             seconds,
-            idNum = Math.floor(Math.random() * 9000000000000) + 1000000000000;
+            idNum = Math.floor(Math.random() * 9000000000000) + 1000000000000; // Add ranomised 13 digit ID
         description = stringTidy(description); // Strip hyphens and other intersting chars from string and trim whitespace
         timeConversion(arr, time, idNum, seconds, description, videoDuration); // push into array objects
     }
@@ -120,7 +120,7 @@ const addCueEl = (arr, videoDuration, options) => {
         el.style.left = `${Math.round(time / videoDuration * playerWidth)}px`; // Based on proportion of width px using time 
         cueControl.append(el);
     }
-    createCueInfoEl();
+    createCueInfoEl(); // Create the inner placeholder for the cue point data on the tooltips
 }
 
 // Create and introduce to DOM the information tool data
