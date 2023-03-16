@@ -9,6 +9,7 @@ videojs.registerPlugin('cuePointPlugin', function(options) {
         xtractMatch(longDesc, cuePointsArr, videoDuration);
         cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
         cuePointsArr = dedupeArr(cuePointsArr);
+        assignCueEndTime(cuePointsArr);
         addCueEl(cuePointsArr, videoDuration);
         displayMetaInfo(tt, cuePointsArr);
     })
@@ -24,8 +25,8 @@ const xtractMatch = (string, arr, videoDuration) => {
             description = chaptrName[i].slice(chaptrTime[i].length),
             seconds,
             idNum = Math.floor(Math.random() * 9000000000000) + 1000000000000;
-            description = stringTidy(description);
-       timeConversion(arr, time, idNum, seconds, description, videoDuration);
+        description = stringTidy(description);
+        timeConversion(arr, time, idNum, seconds, description, videoDuration);
     }
     arrSort(arr);
 }
@@ -42,7 +43,7 @@ const stringTidy = (str) => {
     return(str);
 }
 
-const timeConversion = (arr, time, idNum, seconds, description, duration) => {
+const timeConversion = (arr, time, idNum, seconds, description, duration, i) => {
     if (description.match(/\b[^\d\W]+\b/g) === null) description = '';
     if (time.length === 2){
         seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1]));
@@ -81,6 +82,19 @@ const dedupeArr = (arr) => {
         } 
     })
     return [...mapObj.values()];
+}
+
+const assignCueEndTime = (arr, i) => {
+    let j = new Array(),
+        next = -1;
+        for (j = i + 1; j < arr.length; j++)
+        {
+            if (arr[i].time < arr[j]){
+            next = arr[j];
+            break;
+        }
+    }
+    console.log(arr);
 }
 
 const displayMetaInfo = (tt, arr) => {
@@ -135,9 +149,7 @@ const addCueEl = (arr, videoDuration) => {
         });
         var time = arr[i].time;
             segment = playerWidth / time;
-        if (segment === Infinity){
-            segment = 0;
-        }
+        if (segment === Infinity) segment = 0;
         el.style.left = `${Math.round(time / videoDuration * playerWidth)}px`; // Based on proportion of width using time 
         cueControl.append(el);
     }
