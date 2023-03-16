@@ -20,6 +20,7 @@ const xtractMatch = (string, arr, videoDuration) => {
         dRex = new RegExp(/^.*?(^[0-5][0-9]:|^[0-59]:).*$/gm),
         chaptrTime = string.match(tRex),
         chaptrName = string.match(dRex);
+    if (chaptrName || chaptrTime === null) return(arrSort(arr)); 
     for (let i = 0; i < chaptrTime.length; i++) {
         let time = chaptrTime[i].split(':'),
             description = chaptrName[i].slice(chaptrTime[i].length),
