@@ -123,8 +123,8 @@ Or with some opacity?
 
 ### Installation
 
-Please follow the [well docemented plugin guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.\
-Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding option JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_./
+Please follow the [well docemented guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.\
+Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding options JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_./
 #### It's all in the name: 
 Make sure the plugin is named `cuePointMarkersPlugin` in the `plugin name` field in the Video Cloud plyers module.
 Watch the video at the following Brightcove docs page on how to install a plugin. The guide details the plugin name quite well.
