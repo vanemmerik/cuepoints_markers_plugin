@@ -19,15 +19,15 @@ What is untested: The running of this plugin alongside the IMA plugin needs more
 To have the chapers appear on the time player progress bar this plugin must be installed on a designated player
 
 
-00:10 - Intro
-01:04 - Pricing and features
-03:14 - Practicality 
-05:44 - Under the bonnet
-06:51 - Driving
-11:04 - Efficiency
-11:21 - Safety
-11:46 - Ownership
-12:20 - Verdict
+00:10 - Intro\
+01:04 - Pricing and features\
+03:14 - Practicality\
+05:44 - Under the bonnet\
+06:51 - Driving\
+11:04 - Efficiency\
+11:21 - Safety\
+11:46 - Ownership\
+12:20 - Verdict\
 
 ```json
     {
