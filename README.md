@@ -38,11 +38,11 @@ Browser testing has been mild but **Firefox 110.0.1**, **Chrome 111.0.5563.64** 
       <td>The browsable HTML page that contains the HTML code, and the link to the CSS and the include to the JavaScript.</td>
     </tr>
     <tr>
-      <td>plugin/plugin-name.js</td>
+      <td>plugin/cuepoints.js</td>
       <td>The JavaScript for the plugin.</td>
     </tr>
     <tr>
-      <td>plugin/plugin-name.css</td>
+      <td>plugin/cuepoints.css</td>
       <td>The CSS for the plugin.</td>
     </tr>
   </tbody>
@@ -96,7 +96,7 @@ Additionally time in seconds will be ignored.
 ```
 120 Chapter name
 ```
-> **Note** If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will be ignored.
+<div><p>If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will be ignored.</p></div>
 
 Formats that will work:
 ```
