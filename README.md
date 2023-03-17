@@ -18,6 +18,35 @@ Browser testing has been mild but **Firefox 110.0.1**, **Chrome 111.0.5563.64** 
 * Ad based cue points are ignored
 * The colour of the cue markers can be defined in the Video Cloud player module as a JSON option
 * Once chapters have been added the change will be detected by all deployed Brightcove players that have this plugin installed
+* Intended for desktop web - Cue point elements have been hidden for mobile intentionally
+
+#### Repo structure and purpose
+<table>
+  <thead>
+    <tr>
+      <th>Folder/Filename</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>index.html</td>
+      <td>All the application code, HTML, CSS and JavaScript, in a single file.</td>
+    </tr>
+    <tr>
+      <td>plugin/index.html</td>
+      <td>The browsable HTML page that contains the HTML code, and the link to the CSS and the include to the JavaScript.</td>
+    </tr>
+    <tr>
+      <td>plugin/plugin-name.js</td>
+      <td>The JavaScript for the plugin.</td>
+    </tr>
+    <tr>
+      <td>plugin/plugin-name.css</td>
+      <td>The CSS for the plugin.</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Usage
 
