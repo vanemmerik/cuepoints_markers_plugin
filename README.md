@@ -25,6 +25,9 @@ Chapters can be pasted into the [long description field](https://studio.support.
 
 ![edit long description](readme_images/long_description.gif)
 
+> **Note**
+> The following chapters are an example of what can be placed in the long description field.
+
 00:10 - Intro\
 01:04 - Pricing and features\
 03:14 - Practicality\
