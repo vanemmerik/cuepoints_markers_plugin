@@ -26,19 +26,31 @@ Chapters can be pasted or typed into the [long description field](https://studio
 ![edit long description](readme_images/long_description.gif)
 
 > **Note**\
-> The following chapters are an example of what can be placed in the long description field.\
-\
-> 00:10 - Intro\
-> 01:04 - Pricing and features\
-> 03:14 - Practicality\
-> 05:44 - Under the bonnet\
-> 06:51 - Driving\
-> 11:04 - Efficiency\
-> 11:21 - Safety\
-> 11:46 - Ownership\
-> 12:20 - Verdict\
-\
-> Timestamps will be recognised in **HH:MM:SS**, **H:MM:SS**, **MM:SS** or **M:SS** formats.
+> The following chapters are an example of what can be placed in the long description field.
+```
+00:10 - Snow Hey Oh
+01:04 - Sikamikanico
+03:14 - Higher Ground
+05:44 - Suck My Kiss
+06:51 - Scar Tissue
+11:04 - By the Way
+11:21 - LA Lakers
+11:46 - Dark Necessities
+12:20 - Aeroplane
+```
+Or
+```
+00:10 Agoraphobia
+01:04 Aqueous Transmission
+03:14 Drive
+05:44 Are You In
+06:51 Nice to Know You
+11:04 Privilege
+11:21 Wish you were here
+11:46 Pardon Me
+12:20 Megalomaniac
+```
+> Timestamps will be recognised in `HH:MM:SS`, `H:MM:SS`, `MM:SS` or `M:SS` formats.
 
 In the above example there are hyphens but these are unnecessary to make make the plugin recognise chapters. Most characters such as `+`, `*`, `~`, `:` or `-` will be stripped so the "chapter tip" or "cue tip" will display correctly. Whitespace is also trimmed from the chapter description as well.\
 Chapters or indexes that have timecode in the description will be ignored.\
@@ -54,16 +66,18 @@ Additionally time in seconds will be ignored.
 ```
 Formats that will work:
 ```
-02:32 Vivid sunrise
-2:32 - Vivid sunset
-0:23 Sunspots
-00:30 + Bark at the moon
+02:32 No More Tears
+2:32 - Perry Mason
+0:23 Crazy Train
+0:46
+00:30 + Bark at the Moon
+02:05:17 Mr Crowley
+1:25:48 Patient Number 9
 ```
-As mentioned the there is no need for a `00:00` chapter as with **YouTube** to trigger the inclusion of the chapters.\
+As mentioned the there is no need for a `00:00` chapter or "intro" as with **YouTube** to trigger the inclusion and recognition of the chapters.
 > **Note** With little effort (for the tecchnically inclined) the plugin can be augmented to accept chapter data from a custom field to suit a more specific workflow.
 
-> **Note**\
-> Dont forget that with this plugin you can use [cue points](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html) at the same time. Timestamps that are the same will be removed and the cue point metadata will override the chapter in the long description field.\
+> **Note** Dont forget that with this plugin you can use [cue points](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html) at the same time. Timestamps that are the same will be removed and the cue point metadata will override the chapter in the long description field.\
 Cue points will render on the player in the same way as chapters found in the long description field.
 
 #### Cue marker colours
@@ -91,4 +105,4 @@ Or with some opacity?
 
 ### Installation
 
-Please follow this guide on installing plugins on a Brightcove player
+Please follow the [well docemented plugin guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.
