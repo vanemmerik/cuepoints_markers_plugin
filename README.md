@@ -23,7 +23,7 @@ Browser testing has been mild but **Firefox 110.0.1**, **Chrome 111.0.5563.64** 
 
 #### Method 1: Chapters in the long description field
 
-To have the chapers appear on the time player progress bar this plugin must be installed on a designated player.
+To have the chapters appear on the time player progress bar this plugin must be installed on a designated player.
 Chapters can be pasted or typed into the [long description field](https://studio.support.brightcove.com/media/properties/editing-video-properties-using-media-module.html#videoinfo) in the media module or the [add code cue points using the cue points UI](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html).
 
 ![edit long description](readme_images/long_description.gif)
@@ -67,7 +67,7 @@ Additionally time in seconds will be ignored.
 ```
 120 Chapter name
 ```
-> If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will be ignored.
+> **Note** If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will be ignored.
 
 Formats that will work:
 ```
@@ -80,7 +80,7 @@ Formats that will work:
 1:25:48 Patient Number 9
 ```
 As mentioned the there is no need for a `00:00` chapter or "intro" as with **YouTube** to trigger the inclusion and recognition of the chapters.
-> **Note** With little effort (for the tecchnically inclined) the plugin can be augmented to accept chapter data from a [custom field](https://studio.support.brightcove.com/admin/creating-custom-metadata-fields.html) to suit a more specific workflow.
+> **Note** With little effort (for the tecchnically inclined) the plugin can be augmented to accept chapter data from a [custom field](https://studio.support.brightcove.com/admin/creating-custom-metadata-fields.html) to suit a more specific workflows.
 
 > **Note** **Remember:** With this plugin you can use [cue points](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html) at the same time. Timestamps that are the same will be removed and the cue point metadata will override the chapter in the long description field.\
 <strong style="color: hotpink;">Use `'CODE'` cue points. They will render on the player in the same way</strong> as chapters found in the long description field.
@@ -124,14 +124,15 @@ Or with some opacity?
 ### Installation
 
 Please follow the [well docemented guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.\
-Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding options JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_./
+Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding options JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_.
 #### It's all in the name: 
 Make sure the plugin is named `cuePointMarkersPlugin` in the `plugin name` field in the Video Cloud plyers module.
 Watch the video at the following Brightcove docs page on how to install a plugin. The guide details the plugin name quite well.
+https://player.support.brightcove.com/basics/developer-basics-custom-plugin-using-studio.html
 
 ### Disclaimers
 
 * As this plugin has been created for demonstration purposes it is not officially supported by Brightcove
 * This plugin is not intended for production deployment. If this plugin is utilised for production deployment it is done so  at the users or entities risk. All appropriate testing, applicable coding standards and security is the responsibility of the deployer/user.
 * It is the users/deployers responsibility to host the plugin files so they are accessible to the Brightcove player.
-* This plugin is not covered under Brightcove's support agreement.
+* This plugin is not covered under the Brightcove support agreement.
