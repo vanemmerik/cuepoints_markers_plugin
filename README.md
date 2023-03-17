@@ -3,6 +3,7 @@
 A Brightcove player plugin that adds cue point markers and associated metadata dynamically to the player progress bar.
 The plugn prioritises the cue metadata form Video Cloud over the "chapter" metadata associated with the video object.\
 Unlike other implementations of chaptering there is no need for the admin to add an index or marker at 00:00 of the video.\
+\
 This implementation has been tested against player version 7.2 and 6.67. Browser testing has been mild but Firefox 110.0.1, Chrome 111.0.5563.64 and Safari 16.3.\
 \
 What remains untested: The running of this plugin alongside the IMA plugin needs more thorugh testing in the context of Server Side Ad Insertion and Client Side Ad Insertion where chapters are used to trigger mid-roll video ads.
