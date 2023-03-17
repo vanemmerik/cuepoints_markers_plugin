@@ -57,8 +57,7 @@ Chapters can be pasted or typed into the [long description field](https://studio
 
 ![edit long description](readme_images/long_description.gif)
 
-> **Note**\
-> The following chapters are an example of what can be placed in the long description field.
+> **Note** The following chapters are an example of what can be placed in the long description field.
 ```
 00:10 - Snow Hey Oh
 01:04 - Sikamikanico
@@ -96,7 +95,7 @@ Additionally time in seconds will be ignored.
 ```
 120 Chapter name
 ```
-<div style="border-radius: 10px; border 1px solid #hotpink;"><p>If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will be ignored.</p></div>
+> **Note** If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will also be ignored.
 
 Formats that will work:
 ```
