@@ -85,6 +85,8 @@ As mentioned the there is no need for a `00:00` chapter or "intro" as with **You
 
 #### Method 2: Use cue points
 
+![add cue points](readme_images/cue_points.gif)
+
 
 #### Cue marker colours
 When the plugin is being configured a **Video Cloud** user has the option of setting the marker colour as follows:
