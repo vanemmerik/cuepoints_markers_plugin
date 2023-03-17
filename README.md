@@ -150,17 +150,15 @@ Or with some opacity?
 ![edit cue colour](readme_images/options.gif)
 
 ### Installation
-
-Please follow the [well docemented guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.\
+Please follow the [well docemented guide on installing plugins](https://player.support.brightcove.com/coding-topics/step-step-plugin-development.html#Deploy_the_plugin) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.\
 Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding options JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_.
 #### It's all in the name: 
 Make sure the plugin is named `cuePointMarkersPlugin` in the `plugin name` field in the Video Cloud plyers module.
 Watch the video at the following Brightcove docs page on how to install a plugin. The guide details the plugin name quite well.
 https://player.support.brightcove.com/basics/developer-basics-custom-plugin-using-studio.html
 
-### Disclaimers
-
-* As this plugin has been created for demonstration purposes it is not officially supported by Brightcove
-* This plugin is not intended for production deployment. If this plugin is utilised for production deployment it is done so  at the users or entities risk. All appropriate testing, applicable coding standards and security is the responsibility of the deployer/user.
-* It is the users/deployers responsibility to host the plugin files so they are accessible to the Brightcove player.
-* This plugin is not covered under the Brightcove support agreement.
+> :warning: **Disclaimer**
+> * As this plugin has been created for demonstration purposes it is not officially supported by Brightcove
+> * This plugin is not intended for production deployment. If this plugin is utilised for production deployment it is done so  at the users or entities risk. All appropriate testing, applicable coding standards and security is the responsibility of the deployer/user.
+> * It is the users/deployers responsibility to host the plugin files so they are accessible to the Brightcove player.
+> * This plugin is not covered under the Brightcove support agreement.

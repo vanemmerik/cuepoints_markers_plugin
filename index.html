@@ -123,6 +123,61 @@
         .vjs-cue-tip-visible {
             display: block;
         }
+
+        /* For Tablet View */
+        @media screen and (min-device-width: 768px)
+        and (max-device-width: 1024px) {
+            .vjs-cue-marker {
+                display: none;
+            }
+            .vjs-cue-tip {
+                display: none;
+            }
+            .vjs-cue-data {
+                display: none;
+            }
+        }
+        
+        /* For Mobile Portrait View */
+        @media screen and (max-device-width: 480px)
+        and (orientation: portrait) {
+            .vjs-cue-marker {
+                display: none;
+            }
+            .vjs-cue-tip {
+                display: none;
+            }
+            .vjs-cue-data {
+                display: none;
+            }
+        }
+        
+        /* For Mobile Landscape View */
+        @media screen and (max-device-width: 640px)
+        and (orientation: landscape) {
+            .vjs-cue-marker {
+                display: none;
+            }
+            .vjs-cue-tip {
+                display: none;
+            }
+            .vjs-cue-data {
+                display: none;
+            }
+        }
+        
+        /* For Mobile Phones Portrait or Landscape View */
+        @media screen and (max-device-width: 640px) {
+            .vjs-cue-marker {
+                display: none;
+            }
+            .vjs-cue-tip {
+                display: none;
+            }
+            .vjs-cue-data {
+                display: none;
+            }
+        }
 </style>
 </head>
 <body>
@@ -147,7 +202,8 @@
             data-account="5380177774001" 
             data-player="default" 
             data-embed="default" 
-            controls="" 
+            controls=""
+            playsinline
             data-video-id="1760202275610894432" 
             data-playlist-id=""
             data-application-id="" 
