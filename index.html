@@ -247,7 +247,7 @@
             assignCueEndTime(purgedCueArr,videoDuration);
             // Take purged cue point information and add cue markers to player progress bar
             addCueEl(purgedCueArr, videoDuration, options);
-            displayMetaInfo(tt, cuePointsArr); // ********* Remove ********* for debugging purposes in standalone HTML example
+            displayMetaInfo(tt, purgedCueArr); // ********* Remove ********* for debugging purposes in standalone HTML example
             // If playlist player/playlist is present - clear UI for new playlist item
             if (player.playlistUi !== undefined) player.on('playlistitem', function(){rmCueEl()})
         })
