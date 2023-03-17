@@ -27,16 +27,17 @@ Chapters can be pasted into the [long description field](https://studio.support.
 
 > **Note**
 > The following chapters are an example of what can be placed in the long description field.
-
-00:10 - Intro\
-01:04 - Pricing and features\
-03:14 - Practicality\
-05:44 - Under the bonnet\
-06:51 - Driving\
-11:04 - Efficiency\
-11:21 - Safety\
-11:46 - Ownership\
-12:20 - Verdict
+> 00:10 - Intro\
+> 01:04 - Pricing and features\
+> 03:14 - Practicality\
+> 05:44 - Under the bonnet\
+> 06:51 - Driving\
+> 11:04 - Efficiency\
+> 11:21 - Safety\
+> 11:46 - Ownership\
+> 12:20 - Verdict\
+\
+> Timestamps will be recognised in HH:MM:SS, H:MM:SS, MM:SS or M:SS formats.
 
 ```json
 {
