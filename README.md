@@ -8,7 +8,7 @@ What is untested: The running of this plugin alongside the IMA plugin needs more
 
 ### Behaviours
 
-* This plugin works with a (https://studio.support.brightcove.com/get-started/basics/video-cloud-basics-creating-playlist-player.html "playlist enabled player")
+* This plugin works with a [playlist enabled player](https://studio.support.brightcove.com/get-started/basics/video-cloud-basics-creating-playlist-player.html)
 * Tooltips with chapter description appear alongside the chapter marker when hovered over on the player control bar
 * Ad based cue points are ignored
 * The colour of the cue markers can be defined in the Video Cloud player module as a JSON option
