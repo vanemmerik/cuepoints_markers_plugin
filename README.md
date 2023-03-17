@@ -16,8 +16,8 @@ What is untested: The running of this plugin alongside the IMA plugin needs more
 
 ### Usage
 
-To have the chapers appear on the time player progress bar this plugin must be installed on a designated player
-
+To have the chapers appear on the time player progress bar this plugin must be installed on a designated player.
+Chapters can be pasted into the [long description field](https://studio.support.brightcove.com/media/properties/editing-video-properties-using-media-module.html#videoinfo) in the media module or the [add code cue points using the cue points UI](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html).
 
 00:10 - Intro\
 01:04 - Pricing and features\
@@ -27,7 +27,7 @@ To have the chapers appear on the time player progress bar this plugin must be i
 11:04 - Efficiency\
 11:21 - Safety\
 11:46 - Ownership\
-12:20 - Verdict\
+12:20 - Verdict
 
 ```json
     {
