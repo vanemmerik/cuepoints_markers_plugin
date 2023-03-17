@@ -10,7 +10,7 @@ What remains untested: The running of this plugin alongside the IMA plugin needs
 
 ### Behaviours
 
-![video player](https://vanemmerik.com.au/wp-content/uploads/2023/03/video_player.gif)
+![video player](readme_images/video_player.gif)
 
 * This plugin works with a [playlist enabled player](https://studio.support.brightcove.com/get-started/basics/video-cloud-basics-creating-playlist-player.html)
 * Tooltips with chapter description appear alongside the chapter marker when hovered over on the player control bar
@@ -22,6 +22,8 @@ What remains untested: The running of this plugin alongside the IMA plugin needs
 
 To have the chapers appear on the time player progress bar this plugin must be installed on a designated player.
 Chapters can be pasted into the [long description field](https://studio.support.brightcove.com/media/properties/editing-video-properties-using-media-module.html#videoinfo) in the media module or the [add code cue points using the cue points UI](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html).
+
+![edit long description](readme_images/long_description.gif)
 
 00:10 - Intro\
 01:04 - Pricing and features\
