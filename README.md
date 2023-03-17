@@ -25,8 +25,9 @@ Chapters can be pasted into the [long description field](https://studio.support.
 
 ![edit long description](readme_images/long_description.gif)
 
-> **Note**
-> The following chapters are an example of what can be placed in the long description field.
+> **Note**\
+> The following chapters are an example of what can be placed in the long description field.\
+\
 > 00:10 - Intro\
 > 01:04 - Pricing and features\
 > 03:14 - Practicality\
@@ -37,7 +38,9 @@ Chapters can be pasted into the [long description field](https://studio.support.
 > 11:46 - Ownership\
 > 12:20 - Verdict\
 \
-> Timestamps will be recognised in HH:MM:SS, H:MM:SS, MM:SS or M:SS formats.
+> Timestamps will be recognised in HH:MM:SS, H:MM:SS, MM:SS or M:SS formats.\
+
+
 
 ```json
 {
