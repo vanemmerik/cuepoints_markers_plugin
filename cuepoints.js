@@ -62,7 +62,7 @@ const arrSort = (arr) => {
 
 // Removal of hyphens, pluses but allows inverted commas etc
 const stringTidy = (str) => {
-    str = str.replace(/([.,\/;:{}=\-_~()<>{}+])/g, '');
+    str = str.replace(/([.,\/;:*{}=\-_~()<>{}+])/g, '');
     // Remove whitespace form either end of the string
     str = str.trim();
     return(str);
