@@ -2,11 +2,12 @@
 
 A Brightcove player plugin that adds cue point markers and associated metadata dynamically to the player progress bar.
 The plugn prioritises the cue metadata form Video Cloud over the "chapter" metadata associated with the video object.\
-Unlike other implementations of chaptering there is no need for the admin to add an index or marker at 00:00 of the video.\
+Unlike other implementations of chaptering there is no need for the admin to add an index or marker at `00:00` of the video.\
 \
-This implementation has been tested against player version 7.2 and 6.67. Browser testing has been mild but Firefox 110.0.1, Chrome 111.0.5563.64 and Safari 16.3.\
+This implementation has been tested against the Brightcove player version 7.2 and 6.67.\
+Browser testing has been mild but **Firefox 110.0.1**, **Chrome 111.0.5563.64** and **Safari 16.3** have done the rounds. Edge requires a review.\
 \
-What remains untested: The running of this plugin alongside the IMA plugin needs more thorugh testing in the context of Server Side Ad Insertion and Client Side Ad Insertion where chapters are used to trigger mid-roll video ads.
+**What remains untested:** The running of this plugin alongside the IMA ads plugin needs more thorough testing in the context of Server Side Ad Insertion and Client Side Ad Insertion where chapters are used to trigger mid-roll video ads.
 
 ### Behaviours
 
@@ -20,25 +21,39 @@ What remains untested: The running of this plugin alongside the IMA plugin needs
 
 ### Usage
 
+#### Method 1: Chapters in the long description field
+
 To have the chapers appear on the time player progress bar this plugin must be installed on a designated player.
 Chapters can be pasted or typed into the [long description field](https://studio.support.brightcove.com/media/properties/editing-video-properties-using-media-module.html#videoinfo) in the media module or the [add code cue points using the cue points UI](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html).
 
 ![edit long description](readme_images/long_description.gif)
 
 > **Note**\
-> The following chapters are an example of what can be placed in the long description field.\
-\
-> 00:10 - Intro\
-> 01:04 - Pricing and features\
-> 03:14 - Practicality\
-> 05:44 - Under the bonnet\
-> 06:51 - Driving\
-> 11:04 - Efficiency\
-> 11:21 - Safety\
-> 11:46 - Ownership\
-> 12:20 - Verdict\
-\
-> Timestamps will be recognised in **HH:MM:SS**, **H:MM:SS**, **MM:SS** or **M:SS** formats.
+> The following chapters are an example of what can be placed in the long description field.
+```
+00:10 - Snow Hey Oh
+01:04 - Sikamikanico
+03:14 - Higher Ground
+05:44 - Suck My Kiss
+06:51 - Scar Tissue
+11:04 - By the Way
+11:21 - LA Lakers
+11:46 - Dark Necessities
+12:20 - Aeroplane
+```
+Or
+```
+00:10 Agoraphobia
+01:04 Aqueous Transmission
+03:14 Drive
+05:44 Are You In
+06:51 Nice to Know You
+11:04 Privilege
+11:21 Wish you were here
+11:46 Pardon Me
+12:20 Megalomaniac
+```
+> Timestamps will be recognised in `HH:MM:SS`, `H:MM:SS`, `MM:SS` or `M:SS` formats.
 
 In the above example there are hyphens but these are unnecessary to make make the plugin recognise chapters. Most characters such as `+`, `*`, `~`, `:` or `-` will be stripped so the "chapter tip" or "cue tip" will display correctly. Whitespace is also trimmed from the chapter description as well.\
 Chapters or indexes that have timecode in the description will be ignored.\
@@ -54,17 +69,22 @@ Additionally time in seconds will be ignored.
 ```
 Formats that will work:
 ```
-02:32 Vivid sunrise
-2:32 - Vivid sunset
-0:23 Sunspots
-00:30 + Bark at the moon
+02:32 No More Tears
+2:32 - Perry Mason
+0:23 Crazy Train
+0:46
+00:30 + Bark at the Moon
+02:05:17 Mr Crowley
+1:25:48 Patient Number 9
 ```
-As mentioned the there is no need for a `00:00` chapter as with **YouTube** to trigger the inclusion of the chapters.\
-> **Note** With little effort (for the tecchnically inclined) the plugin can be augmented to accept chapter data from a custom field to suit a more specific workflow.
+As mentioned the there is no need for a `00:00` chapter or "intro" as with **YouTube** to trigger the inclusion and recognition of the chapters.
+> **Note** With little effort (for the tecchnically inclined) the plugin can be augmented to accept chapter data from a [custom field](https://studio.support.brightcove.com/admin/creating-custom-metadata-fields.html) to suit a more specific workflow.
 
-> **Note**\
-> Dont forget that with this plugin you can use [cue points](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html) at the same time. Timestamps that are the same will be removed and the cue point metadata will override the chapter in the long description field.\
-Cue points will render on the player in the same way as chapters found in the long description field.
+> **Note** **Remember:** With this plugin you can use [cue points](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html) at the same time. Timestamps that are the same will be removed and the cue point metadata will override the chapter in the long description field.\
+<strong style="color: hotpink;">Use `'CODE'` cue points. They will render on the player in the same way</strong> as chapters found in the long description field.
+
+#### Method 2: Use cue points
+
 
 #### Cue marker colours
 When the plugin is being configured a **Video Cloud** user has the option of setting the marker colour as follows:
@@ -91,4 +111,12 @@ Or with some opacity?
 
 ### Installation
 
-Please follow this guide on installing plugins on a Brightcove player
+Please follow the [well docemented plugin guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.\
+Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding option JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_.
+
+### Disclaimers
+
+* As this plugin has been created for demonstration purposes it is not officially supported by Brightcove
+* This plugin is not intended for production deployment. If this plugin is utilised for production deployment it is done so  at the users or entities risk. All appropriate testing, applicable coding standards and security is the responsibility of the deployer/user.
+* It is the users/deployers responsibility to host the plugin files so they are accessible to the Brightcove player.
+* This plugin is not covered under Brightcove's support agreement.
