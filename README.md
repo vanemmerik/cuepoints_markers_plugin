@@ -10,7 +10,7 @@ What remains untested: The running of this plugin alongside the IMA plugin needs
 
 ### Behaviours
 
-(https://solutions.brightcove.com/jvanemmerik/git/video_player.gif)
+![video](https://solutions.brightcove.com/jvanemmerik/git/video_player.gif)
 
 * This plugin works with a [playlist enabled player](https://studio.support.brightcove.com/get-started/basics/video-cloud-basics-creating-playlist-player.html)
 * Tooltips with chapter description appear alongside the chapter marker when hovered over on the player control bar
