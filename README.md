@@ -10,6 +10,8 @@ What remains untested: The running of this plugin alongside the IMA plugin needs
 
 ### Behaviours
 
+(https://solutions.brightcove.com/jvanemmerik/git/video_player.gif)
+
 * This plugin works with a [playlist enabled player](https://studio.support.brightcove.com/get-started/basics/video-cloud-basics-creating-playlist-player.html)
 * Tooltips with chapter description appear alongside the chapter marker when hovered over on the player control bar
 * Ad based cue points are ignored
@@ -32,7 +34,7 @@ Chapters can be pasted into the [long description field](https://studio.support.
 12:20 - Verdict
 
 ```json
-    {
-        "cue_marker_color": "#FFF"
-    }
+{
+    "cue_marker_color": "#FFF"
+}
 ```
