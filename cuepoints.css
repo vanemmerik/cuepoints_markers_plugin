@@ -79,6 +79,14 @@
   text-shadow: -1px 0px 1px #c6c6c6;
 }
 
+@-moz-document url-prefix() { 
+  .vjs-cue-data-right::before {
+    position: absolute;
+    margin-left: -19px;
+    top: 17px;
+  }
+}
+
 .vjs-cue-tip-visible {
   display: block;
 }

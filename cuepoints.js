@@ -1,36 +1,59 @@
-videojs.registerPlugin('cuePointPlugin', function(options) {
+videojs.registerPlugin('cuePointMarkersPlugin', function(options) {
 	var player = this;
     player.on('loadedmetadata', function() {
         let cuePointsArr = new Array(),
+            filteredCueArr = new Array(),
+            purgedCueArr = new Array(),
+            // Define the video duration as a variable
             videoDuration = player.mediainfo.duration,
-            longDesc = player.mediainfo.longDescription;
-        cuePointsArr = player.mediainfo.cuePoints; // Add existing cue point metadata to the cue points array
-        xtractMatch(longDesc, cuePointsArr, videoDuration); // Check for chapters in the longDescription metadata field, sort and merge
-        cuePointsArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT')); // Filter ad cue points out of the array
-        cuePointsArr = dedupeArr(cuePointsArr); // Remove duplicates based on time
-        assignCueEndTime(cuePointsArr,videoDuration); // Assign endTime to cue points in sorted array
-        addCueEl(cuePointsArr, videoDuration, options); // Take formatted cue point information and add cue markers to player progress bar
+            // Get Video Cloud metadata long description field
+            longDesc = player.mediainfo.longDescription,
+            // Define video ID for playlist player management
+            videoId = player.mediainfo.id;
+        // Add existing cue point metadata to the cue points array
+        for (let i = 0; i < player.mediainfo.cuePoints.length; i++){
+            cuePointsArr.push(player.mediainfo.cuePoints[i]);
+        }
+        // Check for chapters in the longDescription metadata field, sort and merge
+        xtractMatch(longDesc, cuePointsArr, videoDuration, videoId);
+        // Add to filtered array based on original
+        filteredCueArr = cuePointsArr.filter(cue => (cue.type === 'CODE') || (cue.type === 'TEXT'));
+        // Remove duplicates based on time and replace
+        purgedCueArr = dedupeArr(filteredCueArr);
+        // Assign endTime to cue points in sorted array
+        assignCueEndTime(purgedCueArr,videoDuration);
+        // Take purged cue point information and add cue markers to player progress bar
+        addCueEl(purgedCueArr, videoDuration, options);
+        // If playlist player/playlist is present - clear UI for new playlist item
+        if (player.playlistUi !== undefined) player.on('playlistitem', function(){rmCueEl()})
     })
 });
 
-const xtractMatch = (string, arr, videoDuration) => {
-    let tRex = new RegExp(/(^(?:[01]\d|2[0-3]|[0-59]):[0-5]\d:[0-5]\d)|(^(?:[0-5]\d|2[123]|[0-59]):[0-5]\d)/gm), // Match time formats M:SS, MM:SS, HH:MM:SS, H:MM:SS 
-        dRex = new RegExp(/^.*?(^[0-5][0-9]:|^[0-59]:).*$/gm), // Match whole line that begins with 00: Lines with time not at the start are ignored
+const xtractMatch = (string, arr, videoDuration, videoId) => {
+        // Match time formats M:SS, MM:SS, HH:MM:SS, H:MM:SS
+    let tRex = new RegExp(/(^(?:[01]\d|2[0-3]|[0-59]):[0-5]\d:[0-5]\d)|(^(?:[0-5]\d|2[123]|[0-59]):[0-5]\d)/gm),
+        // Match whole line that begins with 00: Lines with time format not at the beginning are ignored
+        dRex = new RegExp(/^.*?(^[0-5][0-9]:|^[0-59]:).*$/gm),
         chaptrTime = string.match(tRex),
         chaptrName = string.match(dRex);
-    if (chaptrTime === null) return(arrSort(arr)); // No found chapters sort the array as it is
+        // No found chapters - sort the array as it is and skip adding any further cue information
+    if (chaptrTime === null) return(arrSort(arr));
     for (let i = 0; i < chaptrTime.length; i++) {
         let time = chaptrTime[i].split(':'),
             description = chaptrName[i].slice(chaptrTime[i].length),
             seconds,
-            idNum = Math.floor(Math.random() * 9000000000000) + 1000000000000; // Add ranomised 13 digit ID
-        description = stringTidy(description); // Strip hyphens and other intersting chars from string and trim whitespace
-        timeConversion(arr, time, idNum, seconds, description, videoDuration); // push into array objects
+            // Add ranomised 13 digit ID
+            idNum = Math.floor(Math.random() * 9000000000000) + 1000000000000;
+        // Strip hyphens and other intersting chars from string and trim whitespace    
+        description = stringTidy(description);
+        // push into array objects
+        timeConversion(arr, time, idNum, seconds, description, videoDuration, videoId);
     }
-    arrSort(arr); // Sort array based on time - lowest to highest
+    // Sort array based on time
+    arrSort(arr);
 }
 
-// Array sort function
+// Array sort - order array based on time from lowest to highest
 const arrSort = (arr) => {
     arr.sort((a, b) => {
         return a.time - b.time;
@@ -40,15 +63,19 @@ const arrSort = (arr) => {
 // Removal of hyphens, pluses but allows inverted commas etc
 const stringTidy = (str) => {
     str = str.replace(/([.,\/;:{}=\-_~()<>{}+])/g, '');
-    str = str.trim(); // Remove whitespace form either end of the string
+    // Remove whitespace form either end of the string
+    str = str.trim();
     return(str);
 }
 
-const timeConversion = (arr, time, idNum, seconds, description, duration, i) => {
-    if (description.match(/\b[^\d\W]+\b/g) === null) description = ''; // Check for words in description
+const timeConversion = (arr, time, idNum, seconds, description, duration, videoId) => {
+    // Check for words in description if none set fields to blank
+    if (description.match(/\b[^\d\W]+\b/g) === null) description = '';
     if (time.length === 2){
-        seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1])); // Convert MM:SS to seconds
-        if (seconds > duration) return; // If chapter is longer than the video skip
+        // Convert MM:SS to seconds
+        seconds = (Number.parseFloat(time[0]) * 60 + Number.parseFloat(time[1]));
+        // If chapter is longer than the video skip
+        if (seconds > duration) return;
         arr.push({
             id: `${idNum}`,
             name: description,
@@ -56,12 +83,15 @@ const timeConversion = (arr, time, idNum, seconds, description, duration, i) => 
             time: seconds,
             metadata: description,
             startTime: seconds,
-            endTime: ''
+            endTime: '',
+            video_id: videoId
         });
     }
     if (time.length === 3){
-        seconds = (Number.parseFloat(time[0]) * 3600 + Number.parseFloat(time[1]) * 60 + Number.parseFloat(time[2])); // Convert HH:MM:SS to seconds
-        if (seconds > duration) return; // If chapter is longer than the video skip
+        // Convert HH:MM:SS to seconds
+        seconds = (Number.parseFloat(time[0]) * 3600 + Number.parseFloat(time[1]) * 60 + Number.parseFloat(time[2]));
+        // If chapter is longer than the video skip
+        if (seconds > duration) return;
         arr.push({
             id: `${idNum}`,
             name: description,
@@ -69,7 +99,8 @@ const timeConversion = (arr, time, idNum, seconds, description, duration, i) => 
             time: seconds,
             metadata: description,
             startTime: seconds,
-            endTime: ''
+            endTime: '',
+            video_id: videoId
         });
     }
 }
@@ -86,14 +117,17 @@ const dedupeArr = (arr) => {
     return [...mapObj.values()];
 }
 
-// Hacky method to reassign endTime cue data in Array
-const assignCueEndTime = (arr, duration) => { 
+// Hacky method to reassign endTime cue data in array after arrSort
+const assignCueEndTime = (arr, duration) => {
+    // Order the array on time again - for loop uses time from preceding array object 
+    arrSort(arr);
     let v = 1;
     for (let i = 0; i < arr.length; i++) {
         if (v <= arr.length - 1)arr[i].endTime = arr[v].time;
+        // If last object in array set end time to video duration
         if (v === arr.length) arr[i].endTime = duration;
         v++;
-    }   
+    }
 }
 
 // Build cue point markers and add them to the player progress bar
@@ -108,19 +142,31 @@ const addCueEl = (arr, videoDuration, options) => {
     cueControl.style.setProperty('--cue-control-width', playerWidth + 'px');
     controlBar.prepend(cueControl);
     progresBar.appendChild(cueTip);
-    for (let i = 0; i < arr.length; i++) { // Loop through array and add elements
+    // Loop through array and add elements
+    for (let i = 0; i < arr.length; i++) {
         let el = document.createElement('div');
         el.className = 'vjs-cue-marker';
         el.id = 'marker' + i;
         el.style.setProperty('--marker-color', options.cue_marker_color);
-        el.addEventListener("mouseover", (e) => { // Add mouse event listener to cue marker elements
+        // On mouse over event - add mouse event listener to cue marker elements
+        el.addEventListener("mouseover", (e) => {
             setCueInfo(e, arr);
         });
         let time = arr[i].time;
-        el.style.left = `${Math.round(time / videoDuration * playerWidth)}px`; // Based on proportion of width px using time 
+        // Based on proportion of width in px using time 
+        el.style.left = `${Math.round(time / videoDuration * playerWidth)}px`;
         cueControl.append(el);
     }
-    createCueInfoEl(); // Create the inner placeholder for the cue point data on the tooltips
+    // Create the inner placeholder for the cue point data on the tooltips
+    createCueInfoEl();
+}
+
+// Remove created elements if playlist is present and new video has loaded
+const rmCueEl = () => {
+    let cueControl = document.querySelector('.vjs-cue-control'),
+        cueTip = document.querySelector('.vjs-cue-tip');
+    if (cueTip !== null) cueTip.remove();
+    if (cueControl !== null) cueControl.remove();
 }
 
 // Create and introduce to DOM the information tool data
@@ -140,7 +186,8 @@ const setCueInfo = (e, arr) => {
         cueTipData = document.querySelector('.vjs-cue-data');
     cueTip.classList.add('vjs-cue-tip-visible');
     cueTipData.innerHTML = `${arr[i].name}`;
-    if (cueMarker.offsetLeft > cueHolder / 2){ // Display cue tool tip on left or right of marker on hover based on position
+    // Display cue tool tip on left or right of marker on hover based on position
+    if (cueMarker.offsetLeft > cueHolder / 2){
         cueTipData.classList.add('vjs-cue-data-left');
         cueTip.style.right = cueHolder - cueMarker.offsetLeft +20 + 'px';
     } else {
@@ -149,10 +196,12 @@ const setCueInfo = (e, arr) => {
     }
     if (arr[i].name === '') cueTipData.classList.add('vjs-cue-data-hidden');
     if (i == arr.length - 1) cueMarker.classList.add('vjs-cue-marker-last');
-    cueMarker.addEventListener('mousemove', (e) => { // Follow the pointer on Y axis only
+    // Mouse move event - follow the mouse pointer on Y axis only
+    cueMarker.addEventListener('mousemove', (e) => {
         cueTip.style.top = e.offsetY - 27 + 'px';
     });
-    cueMarker.addEventListener('mouseout', () => { // On mouse out - remove inline styles and classes
+    // On mouse out event - remove inline styles and classes
+    cueMarker.addEventListener('mouseout', () => {
         cueTip.removeAttribute('style');
         cueTip.classList.remove('vjs-cue-tip-visible');
         cueTipData.classList.remove('vjs-cue-data-left');
