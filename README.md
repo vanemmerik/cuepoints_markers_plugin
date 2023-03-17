@@ -34,7 +34,7 @@ Chapters can be pasted or typed into the [long description field](https://studio
 00:10 - Snow Hey Oh
 01:04 - Sikamikanico
 03:14 - Higher Ground
-05:44 - Suck My Kiss
+05:44 - Good Time Boys
 06:51 - Scar Tissue
 11:04 - By the Way
 11:21 - LA Lakers
@@ -67,6 +67,8 @@ Additionally time in seconds will be ignored.
 ```
 120 Chapter name
 ```
+> If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will be ignored.
+
 Formats that will work:
 ```
 02:32 No More Tears
