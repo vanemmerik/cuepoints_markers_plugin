@@ -2,11 +2,12 @@
 
 A Brightcove player plugin that adds cue point markers and associated metadata dynamically to the player progress bar.
 The plugn prioritises the cue metadata form Video Cloud over the "chapter" metadata associated with the video object.\
-Unlike other implementations of chaptering there is no need for the admin to add an index or marker at 00:00 of the video.\
+Unlike other implementations of chaptering there is no need for the admin to add an index or marker at `00:00` of the video.\
 \
-This implementation has been tested against player version 7.2 and 6.67. Browser testing has been mild but Firefox 110.0.1, Chrome 111.0.5563.64 and Safari 16.3.\
+This implementation has been tested against the Brightcove player version 7.2 and 6.67.\
+Browser testing has been mild but **Firefox 110.0.1**, **Chrome 111.0.5563.64** and **Safari 16.3** have done the rounds. Edge requires a review.\
 \
-What remains untested: The running of this plugin alongside the IMA plugin needs more thorugh testing in the context of Server Side Ad Insertion and Client Side Ad Insertion where chapters are used to trigger mid-roll video ads.
+**What remains untested:** The running of this plugin alongside the IMA ads plugin needs more thorough testing in the context of Server Side Ad Insertion and Client Side Ad Insertion where chapters are used to trigger mid-roll video ads.
 
 ### Behaviours
 
@@ -19,6 +20,8 @@ What remains untested: The running of this plugin alongside the IMA plugin needs
 * Once chapters have been added the change will be detected by all deployed Brightcove players that have this plugin installed
 
 ### Usage
+
+#### Method 1: Chapters in the long description field
 
 To have the chapers appear on the time player progress bar this plugin must be installed on a designated player.
 Chapters can be pasted or typed into the [long description field](https://studio.support.brightcove.com/media/properties/editing-video-properties-using-media-module.html#videoinfo) in the media module or the [add code cue points using the cue points UI](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html).
@@ -75,10 +78,13 @@ Formats that will work:
 1:25:48 Patient Number 9
 ```
 As mentioned the there is no need for a `00:00` chapter or "intro" as with **YouTube** to trigger the inclusion and recognition of the chapters.
-> **Note** With little effort (for the tecchnically inclined) the plugin can be augmented to accept chapter data from a custom field to suit a more specific workflow.
+> **Note** With little effort (for the tecchnically inclined) the plugin can be augmented to accept chapter data from a [custom field](https://studio.support.brightcove.com/admin/creating-custom-metadata-fields.html) to suit a more specific workflow.
 
-> **Note** Dont forget that with this plugin you can use [cue points](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html) at the same time. Timestamps that are the same will be removed and the cue point metadata will override the chapter in the long description field.\
-Cue points will render on the player in the same way as chapters found in the long description field.
+> **Note** **Remember:** With this plugin you can use [cue points](https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html) at the same time. Timestamps that are the same will be removed and the cue point metadata will override the chapter in the long description field.\
+<strong style="color: hotpink;">Use `'CODE'` cue points. They will render on the player in the same way</strong> as chapters found in the long description field.
+
+#### Method 2: Use cue points
+
 
 #### Cue marker colours
 When the plugin is being configured a **Video Cloud** user has the option of setting the marker colour as follows:
@@ -105,4 +111,12 @@ Or with some opacity?
 
 ### Installation
 
-Please follow the [well docemented plugin guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.
+Please follow the [well docemented plugin guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.\
+Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding option JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_.
+
+### Disclaimers
+
+* As this plugin has been created for demonstration purposes it is not officially supported by Brightcove
+* This plugin is not intended for production deployment. If this plugin is utilised for production deployment it is done so  at the users or entities risk. All appropriate testing, applicable coding standards and security is the responsibility of the deployer/user.
+* It is the users/deployers responsibility to host the plugin files so they are accessible to the Brightcove player.
+* This plugin is not covered under Brightcove's support agreement.
