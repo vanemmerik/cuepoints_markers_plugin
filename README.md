@@ -38,8 +38,19 @@ Chapters can be pasted into the [long description field](https://studio.support.
 > 11:46 - Ownership\
 > 12:20 - Verdict\
 \
-> Timestamps will be recognised in HH:MM:SS, H:MM:SS, MM:SS or M:SS formats.\
+> Timestamps will be recognised in **HH:MM:SS**, **H:MM:SS**, **MM:SS** or **M:SS** formats.
 
+In the above example there are hyphens but these are unnecessary to make make the plugin recognise chapters. Most characters such as `+`, `*`, `~`, `:` or `-` will be stripped so the "chapter tip" or "cue tip" will display correctly. Whitespace is also trimmed from the chapter description as well.\
+Chapters or indexes that have timecode in the description will be ignored.\
+For eample:\
+```
+The sunrise 20:34
+```
+Will be ignored.\
+Additionally time in seconds will be ignored:
+```
+120 Chapter name
+```
 
 
 ```json
