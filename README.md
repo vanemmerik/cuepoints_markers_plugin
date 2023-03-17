@@ -96,7 +96,7 @@ Additionally time in seconds will be ignored.
 ```
 120 Chapter name
 ```
-<div><p>If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will be ignored.</p></div>
+<div style="border-radius: 10px; border 1px solid #hotpink;"><p>If the plugin detects a chapter duration that is greater than the video duration the illegal chapter will be ignored.</p></div>
 
 Formats that will work:
 ```
