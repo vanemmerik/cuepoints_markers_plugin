@@ -87,6 +87,14 @@ As mentioned the there is no need for a `00:00` chapter or "intro" as with **You
 
 ![add cue points](readme_images/cue_points.gif)
 
+This plugin is built to work with, without, or both chapters and cue points. Any duplication of events will be removed where the `'CODE'` based cue data is prioritised.\
+Chapter metadata that is taken from the long description field is classified as a `'TEXT'` cue point.\
+Both approaches can be used at the same time.
+
+> **Note** Ad cue points are reserved to support advertsing activity for a video object and are ignored by this plugin.
+
+More information on adding cue points and their types can be found here:
+https://studio.support.brightcove.com/media/general/working-cue-points-media-module.html
 
 #### Cue marker colours
 When the plugin is being configured a **Video Cloud** user has the option of setting the marker colour as follows:
@@ -114,7 +122,10 @@ Or with some opacity?
 ### Installation
 
 Please follow the [well docemented plugin guide on installing plugins](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html) for a Brightcove player. This is considered to be a **custom** plugin as the references to the JavaScript file, CSS file and adding the JSON options are essential.\
-Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding option JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_.
+Key ingredients: The [javascript file](cuepoints.js), [the CSS file](cuepoints.css) and [adding option JSON](https://studio.support.brightcove.com/players/general/configuring-player-plugins.html#add_plugin) to the plugin configuration as _illustrated above_./
+#### It's all in the name: 
+Make sure the plugin is named `cuePointMarkersPlugin` in the `plugin name` field in the Video Cloud plyers module.
+Watch the video at the following Brightcove docs page on how to install a plugin. The guide details the plugin name quite well.
 
 ### Disclaimers
 
