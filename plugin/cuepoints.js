@@ -188,11 +188,15 @@ const setCueInfo = (e, arr) => {
     cueTipData.innerHTML = `${arr[i].name}`;
     // Display cue tool tip on left or right of marker on hover based on position
     if (cueMarker.offsetLeft > cueHolder / 2){
+        cueTipData.classList.remove('vjs-cue-data-right');
         cueTipData.classList.add('vjs-cue-data-left');
+        cueTip.style.left = null;
         cueTip.style.right = cueHolder - cueMarker.offsetLeft +20 + 'px';
     } else {
-        cueTip.style.left = cueMarker.offsetLeft +20 + 'px';
+        cueTipData.classList.remove('vjs-cue-data-left');
         cueTipData.classList.add('vjs-cue-data-right');
+        cueTip.style.right = null;
+        cueTip.style.left = cueMarker.offsetLeft +20 + 'px';
     }
     if (arr[i].name === '') cueTipData.classList.add('vjs-cue-data-hidden');
     if (i == arr.length - 1) cueMarker.classList.add('vjs-cue-marker-last');
@@ -202,10 +206,7 @@ const setCueInfo = (e, arr) => {
     });
     // On mouse out event - remove inline styles and classes
     cueMarker.addEventListener('mouseout', () => {
-        cueTip.removeAttribute('style');
         cueTip.classList.remove('vjs-cue-tip-visible');
-        cueTipData.classList.remove('vjs-cue-data-left');
-        cueTipData.classList.remove('vjs-cue-data-right');
         cueTipData.classList.remove('vjs-cue-data-hidden');
     });
 }
