@@ -186,6 +186,7 @@ const setCueInfo = (e, arr) => {
         cueTipData = document.querySelector('.vjs-cue-data');
     cueTip.classList.add('vjs-cue-tip-visible');
     cueTipData.innerHTML = `${arr[i].name}`;
+    cueTip.style.display = null;
     // Display cue tool tip on left or right of marker on hover based on position
     if (cueMarker.offsetLeft > cueHolder / 2){
         cueTipData.classList.remove('vjs-cue-data-right');
@@ -198,8 +199,7 @@ const setCueInfo = (e, arr) => {
         cueTip.style.right = null;
         cueTip.style.left = cueMarker.offsetLeft +20 + 'px';
     }
-    if (arr[i].name === '') cueTipData.classList.add('vjs-cue-data-hidden');
-    if (i == arr.length - 1) cueMarker.classList.add('vjs-cue-marker-last');
+    if (arr[i].name === '') cueTip.style.display = 'none';
     // Mouse move event - follow the mouse pointer on Y axis only
     cueMarker.addEventListener('mousemove', (e) => {
         cueTip.style.top = e.offsetY - 27 + 'px';
@@ -207,6 +207,5 @@ const setCueInfo = (e, arr) => {
     // On mouse out event - remove inline styles and classes
     cueMarker.addEventListener('mouseout', () => {
         cueTip.classList.remove('vjs-cue-tip-visible');
-        cueTipData.classList.remove('vjs-cue-data-hidden');
     });
 }
