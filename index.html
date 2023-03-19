@@ -73,17 +73,27 @@
             display: none;
         }
 
+        @-webkit-keyframes fade-out {
+            from {visibility: visible}
+            to { transform: translateY(5px); opacity: 0;}
+        }
+
         @keyframes fade-out {
             from {visibility: visible}
             to { transform: translateY(5px); opacity: 0;}
         }
 
         .vjs-cue-tip {
-            animation: fade-out 300ms ease-out;
+            -webkit-animation: fade-out 300ms ease-out;
+                    animation: fade-out 300ms ease-out;
             position: absolute;
             pointer-events: none;
             visibility: hidden;
             z-index: 4;
+        }
+
+        @-webkit-keyframes fade-in {
+            from { transform: translateY(5px); opacity: 0;}
         }
 
         @keyframes fade-in {
@@ -91,7 +101,8 @@
         }
 
         .vjs-cue-tip-visible {
-            animation: fade-in 300ms ease-out;
+            -webkit-animation: fade-in 300ms ease-out;
+                    animation: fade-in 300ms ease-out;
             visibility: visible;
         }
 
