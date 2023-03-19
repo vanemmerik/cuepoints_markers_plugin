@@ -16,11 +16,7 @@ Thumbs.db
 # Compiled C++ files
 *.out
 
-# SCSS and SCSS map files
-*.css.map
-*.scss
-
 # Application specific files
-venv
-node_modules
-.sass-cache
+plugin/cuepoints.scss
+plugin/cuepoints.css.map
+
