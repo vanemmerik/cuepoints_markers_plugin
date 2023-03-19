@@ -31,7 +31,7 @@ Browser testing has been mild but **Firefox 110.0.1**, **Chrome 111.0.5563.64** 
   <tbody>
     <tr>
       <td>index.html</td>
-      <td>Essantial application code without compiled SCSS. HTML, CSS and JavaScript, in a single file.</td>
+      <td>Basic finctionality of the plugin. HTML, CSS and JavaScript, in a single file.</td>
     </tr>
     <tr>
       <td>plugin/index.html</td>
