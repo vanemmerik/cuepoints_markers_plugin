@@ -20,6 +20,14 @@
   transform: scaleX(2) !important;
   opacity: 100% !important;
 }
+.vjs-cue-marker:hover::after {
+  position: absolute;
+  width: calc(100% + 2px);
+  height: 100%;
+  left: -1px;
+  background-color: transparent;
+  content: "";
+}
 
 .video-js {
   padding: 0 5px;

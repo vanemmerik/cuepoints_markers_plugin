@@ -23,6 +23,14 @@ $background-color_2: #000;
 		transform: scaleX(2) !important;
 		opacity: 100% !important;
 	}
+	&:hover::after {
+		position: absolute;
+		width: calc(100% + 2px);
+		height: calc(100%);
+		left: -1px;
+		background-color: transparent;
+		content: ''
+	}
 }
 
 .video-js {
