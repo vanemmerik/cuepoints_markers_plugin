@@ -31,7 +31,7 @@ Browser testing has been mild but **Firefox 110.0.1**, **Chrome 111.0.5563.64** 
   <tbody>
     <tr>
       <td>index.html</td>
-      <td>All the application code, HTML, CSS and JavaScript, in a single file.</td>
+      <td>Essantial application code without compiled SCSS. HTML, CSS and JavaScript, in a single file.</td>
     </tr>
     <tr>
       <td>plugin/index.html</td>
@@ -44,6 +44,14 @@ Browser testing has been mild but **Firefox 110.0.1**, **Chrome 111.0.5563.64** 
     <tr>
       <td>plugin/cuepoints.css</td>
       <td>The CSS for the plugin.</td>
+    </tr>
+    <tr>
+      <td>plugin/cuepoints.scss</td>
+      <td>SCSS for primary CSS file.</td>
+    </tr>
+    <tr>
+      <td>plugin/cuepoints.scss.map</td>
+      <td>Reference file for the SCSS compiler.</td>
     </tr>
   </tbody>
 </table>
