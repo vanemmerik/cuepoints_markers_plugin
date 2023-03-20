@@ -146,7 +146,7 @@ const addCueEl = (arr, videoDuration, options) => {
     for (let i = 0; i < arr.length; i++) {
         let el = document.createElement('div');
         el.className = 'vjs-cue-marker';
-        el.id = 'marker' + i;
+        el.id = 'marker-' + i;
         el.style.setProperty('--marker-color', options.cue_marker_color);
         // On mouse over event - add mouse event listener to cue marker elements
         el.addEventListener("mouseover", (e) => {
@@ -179,7 +179,7 @@ const createCueInfoEl = () => {
 
 // Control mouse interaction with the cue markers - Initiated on hover state
 const setCueInfo = (e, arr) => {
-    let i = e.target.id.slice(6),
+    let i = e.target.id.slice(7),
         cueHolder = document.querySelector('.vjs-cue-control').offsetWidth,
         cueMarker = document.querySelectorAll('.vjs-cue-marker')[i],
         cueTip = document.querySelector('.vjs-cue-tip'),
@@ -194,6 +194,7 @@ const setCueInfo = (e, arr) => {
         cueTip.style.left = null;
         cueTip.style.right = cueHolder - cueMarker.offsetLeft +20 + 'px';
     } else {
+        if (arr[i].time === 0) cueMarker.classList.add('initial-marker');
         cueTipData.classList.remove('vjs-cue-data-left');
         cueTipData.classList.add('vjs-cue-data-right');
         cueTip.style.right = null;
