@@ -30,6 +30,7 @@ videojs.registerPlugin('cuePointMarkersPlugin', function(options) {
 });
 
 const xtractMatch = (string, arr, videoDuration, videoId) => {
+    if (string === null) return(arrSort(arr));
         // Match time formats M:SS, MM:SS, HH:MM:SS, H:MM:SS
     let tRex = new RegExp(/(^(?:[01]\d|2[0-3]|[0-59]):[0-5]\d:[0-5]\d)|(^(?:[0-5]\d|2[123]|[0-59]):[0-5]\d)/gm),
         // Match whole line that begins with 00: Lines with time format not at the beginning are ignored
