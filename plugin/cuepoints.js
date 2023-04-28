@@ -133,7 +133,7 @@ const assignCueEndTime = (arr, duration) => {
 
 // Build cue point markers and add them to the player progress bar
 const addCueEl = (arr, videoDuration, options) => {
-    let playerWidth = document.querySelector('video-js').offsetWidth,
+    let playerWidth = document.querySelector('.video-js').offsetWidth,
         controlBar = document.querySelector('.vjs-progress-control'),
         progresBar = document.querySelector('.vjs-progress-holder'),
         cueControl = document.createElement('div'),
