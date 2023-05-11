@@ -691,7 +691,7 @@
 
     // Control mouse interaction with the cue markers - Initiated on hover state
     const setCueInfo = (e, arr) => {
-        let i = e.target.id.slice(7),
+        let i = e.target.id.slice(6),
             cueHolder = document.querySelector('.vjs-cue-control').offsetWidth,
             cueMarker = document.querySelectorAll('.vjs-cue-marker')[i],
             cueTip = document.querySelector('.vjs-cue-tip'),
